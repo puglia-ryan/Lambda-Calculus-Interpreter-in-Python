@@ -1,0 +1,7 @@
+The Python interpreter should expect  the following syntax/language in the files provided to it:
+  - Variables(plain names like x, n, etc..)
+  - Abstractions, using the following syntax λx.M
+  - Applications, using the following syntax (M N)
+  - Parentheses
+
+This info was retrieved about lambda syntax was retrieved from the Wikipedia page about lambda calculus(https://en.wikipedia.org/wiki/Lambda_calculus)
