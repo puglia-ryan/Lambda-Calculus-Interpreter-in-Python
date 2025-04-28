@@ -31,6 +31,30 @@ class App(LambdaExpression):
         self.arg = arg
 
 
+def free_variables(expr):
+    pass
+
+
+def substitute(term, var, repl):
+    pass
+
+
+def alpha_conversion(abs_term, new_param):
+    pass
+
+
+def beta_reduction(term):
+    pass
+
+
+def normalise(term):
+    pass
+
+
+def pretty_print(term):
+    pass
+
+
 class Parser:
     def __init__(self, file):
         self.file = file
