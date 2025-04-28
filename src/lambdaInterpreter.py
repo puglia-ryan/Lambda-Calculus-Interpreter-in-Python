@@ -10,6 +10,7 @@ class LambdaExpression:
     """
     Abstract base class for each valid Lambda Expression
     """
+
     pass
 
 
@@ -29,10 +30,12 @@ class App(LambdaExpression):
         self.func = func
         self.arg = arg
 
+
 class Parser:
     def __init__(self, file):
         self.file = file
         self.pos = 0
+
 
 def main():
     file = open(sys.argv[1]).read()
