@@ -14,15 +14,20 @@ class LambdaExpression:
 
 
 class Var(LambdaExpression):
-    pass
+    def __init__(self, name):
+        self.name = name
 
 
 class Abs(LambdaExpression):
-    pass
+    def __init__(self, param, body):
+        self.param = param
+        self.body = body
 
 
 class App(LambdaExpression):
-    pass
+    def __init__(self, func, arg):
+        self.func = func
+        self.arg = arg
 
 
 def main():
