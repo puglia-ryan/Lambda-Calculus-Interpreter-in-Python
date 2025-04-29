@@ -1,3 +1,4 @@
+from os import name
 import sys
 
 # There are 3 lambda expressions which can make up a term: A varaibale,
@@ -18,18 +19,25 @@ class Var(LambdaExpression):
     def __init__(self, name):
         self.name = name
 
+    def __repr__(self):
+        return self.name
+
 
 class Abs(LambdaExpression):
     def __init__(self, param, body):
         self.param = param
         self.body = body
 
+    def __repr__(self):
+        return f"(λ{self.param}.{self.body})"
 
 class App(LambdaExpression):
     def __init__(self, func, arg):
-        self.func = func
-        self.arg = arg
+        self.func=func
+        self.arg=arg
 
+    def __repr__(self):
+        return f"({self.func} {self.arg})"
 
 def free_variables(expr):
     pass
@@ -52,20 +60,20 @@ def normalise(term):
 
 
 def pretty_print(term):
-    pass
+    return repr(term)
 
 
 class Parser:
     def __init__(self, file):
-        self.file = file
-        self.pos = 0
-    
+        self.file=file
+        self.pos=0
+
     def parse_expr(self):
         pass
 
 
 def main():
-    file = open(sys.argv[1]).read()
+    file=open(sys.argv[1]).read()
 
 
 if __name__ == "__main__":
