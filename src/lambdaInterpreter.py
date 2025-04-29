@@ -20,6 +20,7 @@ class Var(LambdaExpression):
 
     def __repr__(self):
         return self.name
+
     def __eq__(self, other):
         return isinstance(other, Var) and self.name == other.name
 
@@ -69,7 +70,7 @@ def substitute(term, var, repl):
 
 
 def alpha_conversion(abs_term, new_param):
-    pass
+    return Abs(new_param, substitute(abs_term.body, abs_term.param, Var(new_param)))
 
 
 def beta_reduction(term):
