@@ -74,8 +74,20 @@ def alpha_conversion(abs_term, new_param):
 
 
 def beta_reduction(term):
-    pass
-
+    if isinstance(term, App):
+        if isinstance(term.func, Abs):
+            return substitute(term.func.body, term.func.param, term.arg)
+        left = beta_reduction(term.func)
+        if left is not None:
+            return App(left, term.arg)
+        right = beta_reduction(term.arg)
+        if right is not None:
+            return App(term.func, right)
+    if isinstance(term, Abs):
+        reduced = beta_reduction(term.body)
+        if reduced is not None:
+            return Abs(term.param, reduced)
+    return None
 
 def normalise(term):
     pass
