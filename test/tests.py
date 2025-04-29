@@ -13,7 +13,7 @@ class TestLambdaInterpreter(unittest.TestCase):
     def test_free_variables(self):
         self.assertEqual(free_variables(Var('x')), {'x'})
 
-    @unittest.skip("Not implemented yet")
+    # @unittest.skip("Not implemented yet")
     def test_substitute(self):
         # (x y)[x := (λz.z) y] => ((λz.z) y)
         expr = App(Var('x'), Var('y'))
@@ -22,7 +22,7 @@ class TestLambdaInterpreter(unittest.TestCase):
         self.assertIsInstance(result.func, Abs)
         self.assertEqual(result.arg, Var('y'))
 
-    @unittest.skip("Not implemented yet")
+    # @unittest.skip("Not implemented yet")
     def test_alpha_conversion(self):
         orig = Abs('x', App(Var('x'), Var('y')))
         renamed = alpha_conversion(orig, 'w')
@@ -41,7 +41,6 @@ class TestLambdaInterpreter(unittest.TestCase):
         nf = normalise(expr)
         self.assertEqual(pretty_print(nf), 'y')
 
-    @unittest.skip("Not implemented yet")
     def test_pretty_print(self):
         expr = Abs('x', Var('x'))
         self.assertEqual(pretty_print(expr), '(λx.x)')
