@@ -165,7 +165,7 @@ class Parser:
         term = self.parse_atom()
         while True:
             next_token = self.peek()
-            if next_token is None or next_token == ')':
+            if next_token is None or next_token == ")":
                 break
             arg = self.parse_atom()
             term = App(term, arg)
@@ -173,7 +173,13 @@ class Parser:
 
 
 def main():
+    if len(sys.argv) < 2:
+        print("Please provide a file/argument when running this file")
+        print("Usage: python3 src/lambdaInterpreter.py lam_files/<file>.lam")
     src = open(sys.argv[1]).read()
+    expr = Parser(src).parse_expr()
+    nf = normalise(expr)
+    print("Normal form:", pretty_print(nf))
 
 
 if __name__ == "__main__":
