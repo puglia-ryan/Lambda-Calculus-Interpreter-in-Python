@@ -1,4 +1,4 @@
-# PF4-Lambda-Calculus-Interpreter-in-Python
+# Lambda-Calculus-Interpreter-in-Python
 ### The goal of this project is to create a simple lambda-calculus interpreter in Python. The interpreter should have the following:
 - A function for computing the set of free variables in a lambda expression;
 - A function for substituting, in a lambda expression, all the occurrences of the formal parameter with another lambda expression;
