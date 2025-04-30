@@ -135,6 +135,14 @@ class Parser:
         else:
             return None
 
+    # Consumes the next token and ensures it matches the expected value
+    def consume(self, expected):
+        token = self.tokens[self.pos]
+        if expected and token != expected:
+            raise SyntaxError(f"Expected {expected}, but got {token}")
+        self.pos += 1
+        return token
+
     def parse_expr(self):
         pass
 
