@@ -128,6 +128,13 @@ class Parser:
         self.tokens = lexer(src)
         self.pos = 0
 
+    # This function allows the parser to inspect the next token without consuming it
+    def peek(self):
+        if self.pos < len(self.tokens):
+            return self.tokens[self.pos]
+        else:
+            return None
+
     def parse_expr(self):
         pass
 
