@@ -110,7 +110,7 @@ def lexer(src):
         c = src[i]
         if c.isspace():
             i += 1
-        elif c in "().λ\\":
+        elif c in "().λ":
             tokens.append(c)
             i += 1
         elif c.isalnum() or c in "_'":
@@ -143,12 +143,37 @@ class Parser:
         self.pos += 1
         return token
 
+    # Parses either a variable or an expression within parenthesis
+    def parse_atom(self):
+        token = self.peek()
+        if token == "(":
+            self.consume("(")
+            expr = self.parse_expr()
+            self.consume(")")
+            return expr
+        else:
+            return Var(self.consume())
+
+    # Parses a full lambda expression (abstraction, application or "atomic term"(parse_atom()))
     def parse_expr(self):
-        pass
+        if self.peek() == "λ":
+            self.consume()
+            param = self.consume()
+            self.consume(".")
+            body = self.parse_expr()
+            return Abs(param, body)
+        term = self.parse_atom()
+        while True:
+            next_token = self.peek()
+            if next_token is None or next_token == ')':
+                break
+            arg = self.parse_atom()
+            term = App(term, arg)
+        return term
 
 
 def main():
-    file = open(sys.argv[1]).read()
+    src = open(sys.argv[1]).read()
 
 
 if __name__ == "__main__":
