@@ -125,7 +125,7 @@ def lexer(src):
 
 class Parser:
     def __init__(self, file):
-        self.file = file
+        self.tokens = lexer(src)
         self.pos = 0
 
     def parse_expr(self):
