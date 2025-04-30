@@ -50,6 +50,19 @@ class TestLambdaInterpreter(unittest.TestCase):
         tokens = lexer('(λx.(x y))')
         self.assertEqual(tokens, ['(', 'λ', 'x', '.', '(', 'x', 'y', ')', ')'])
 
+    def test_parser_peek(self):
+        parser = Parser('(λx.x)')
+        self.assertEqual(parser.peek(), '(')
+
+    def test_parser_consume(self):
+        parser = Parser('(λx.x)')
+        self.assertEqual(parser.consume(), '(')
+        self.assertEqual(parser.consume(), 'λ')
+        self.assertEqual(parser.consume('x'), 'x')
+        self.assertEqual(parser.consume('.'), '.')
+        self.assertEqual(parser.consume(), 'x')
+        self.assertEqual(parser.consume(')'), ')')
+
     @unittest.skip("Not implemented yet")
     def test_parser(self):
         p = Parser('x')
