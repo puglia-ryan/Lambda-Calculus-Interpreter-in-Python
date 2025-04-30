@@ -89,12 +89,38 @@ def beta_reduction(term):
             return Abs(term.param, reduced)
     return None
 
+
 def normalise(term):
-    pass
+    next_term = beta_reduction(term)
+    while next_term is not None:
+        term = next_term
+        next_term = beta_reduction(term)
+    return term
 
 
 def pretty_print(term):
     return repr(term)
+
+
+# Lexer function which tokenises the input file's characters
+def lexer(src):
+    tokens = []
+    i = 0
+    while i < len(src):
+        c = src[i]
+        if c.isspace():
+            i += 1
+        elif c in "().λ\\":
+            tokens.append(c)
+            i += 1
+        elif c.isalnum() or c in "_'":
+            start = i
+            while i < len(src) and (src[i].isalnum() or src[i] in "_'"):
+                i += 1
+            tokens.append(src[start:i])
+        else:
+            raise SyntaxError(f"Unexpected character: {c}")
+    return tokens
 
 
 class Parser:
