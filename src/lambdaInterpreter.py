@@ -170,23 +170,27 @@ class Parser:
         return term
 
 def main() -> None:
-    """Entry point: reads a .lam file, parses and normalizes the lambda expression"""
+    """Reads a .lam file and evaluates each line as a separate expression."""
     if len(sys.argv) != 2:
         print("Usage: python3 src/lambdaInterpreter.py lam_files/<file>.lam")
         sys.exit(1)
     try:
         with open(sys.argv[1]) as f:
-            src = f.read()
-        expr = Parser(src).parse_expr()
-        nf = normalise(expr)
-        print("Expression: ", pretty_print(expr))
-        print("Normal form: ", pretty_print(nf))
+            lines = [line.strip() for line in f if line.strip()]
+
+        for idx, line in enumerate(lines):
+            print(f"\nExpression {idx + 1}: {line}")
+            try:
+                expr = Parser(line).parse_expr()
+                nf = normalise(expr)
+                print("Parsed:       ", pretty_print(expr))
+                print("Normal form:  ", pretty_print(nf))
+            except SyntaxError as e:
+                print(f"Syntax error on line {idx + 1}: {e}")
+
     except FileNotFoundError:
         print(f"File not found: {sys.argv[1]}")
-    except SyntaxError as e:
-        print(f"Syntax error: {e}")
     except Exception as e:
         print(f"Unexpected error: {e}")
-
 if __name__ == "__main__":
     main()
