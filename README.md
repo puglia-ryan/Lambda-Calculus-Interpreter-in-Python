@@ -10,4 +10,5 @@
 The evaluation of a lambda expression should be done by performing normal-order reduction, i.e., the outermost-leftmost term is selected for reduction at each step of the evaluation.
 ## How to run the program:
 `python3 src/lambdaInterpreter.py <file>.lam"`
+
 Some example files can be found in the lam_files directory
