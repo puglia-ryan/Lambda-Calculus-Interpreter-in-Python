@@ -173,14 +173,15 @@ class Parser:
 
 
 def main():
-    if len(sys.argv) < 2:
-        print("Please provide a file/argument when running this file")
-        print("Usage: python3 src/lambdaInterpreter.py lam_files/<file>.lam")
-    src = open(sys.argv[1]).read()
-    expr = Parser(src).parse_expr()
-    nf = normalise(expr)
-    print("Normal form:", pretty_print(nf))
-
+    try:
+        src = open(sys.argv[1]).read()
+        expr = Parser(src).parse_expr()
+        nf = normalise(expr)
+        print("Expression: ", expr)
+        print("Normal form:", pretty_print(nf))
+    except:
+        print("Please provide 1 file/argument when running this file as such:")
+        print("python3 src/lambdaInterpreter.py lam_files/<file>.lam")
 
 if __name__ == "__main__":
     main()
