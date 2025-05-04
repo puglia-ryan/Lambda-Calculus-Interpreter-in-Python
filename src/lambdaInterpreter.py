@@ -173,15 +173,22 @@ class Parser:
 
 
 def main():
+    if len(sys.argv) != 2:
+        print("Usage: python3 src/lambdaInterpreter.py lam_files/<file>.lam")
+        sys.exit(1)
     try:
-        src = open(sys.argv[1]).read()
+        with open(sys.argv[1]) as f:
+            src = f.read()
         expr = Parser(src).parse_expr()
         nf = normalise(expr)
-        print("Expression: ", expr)
-        print("Normal form:", pretty_print(nf))
-    except:
-        print("Please provide 1 file/argument when running this file as such:")
-        print("python3 src/lambdaInterpreter.py lam_files/<file>.lam")
+        print("Expression: ", pretty_print(expr))
+        print("Normal form: ", pretty_print(nf))
+    except FileNotFoundError:
+        print(f"File not found: {sys.argv[1]}")
+    except SyntaxError as e:
+        print(f"Syntax error: {e}")
+    except Exception as e:
+        print(f"Unexpected error: {e}")
 
 if __name__ == "__main__":
     main()
