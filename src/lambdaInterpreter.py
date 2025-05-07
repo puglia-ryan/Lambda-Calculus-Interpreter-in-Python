@@ -1,15 +1,19 @@
 import sys
 from typing import List, Set, Optional, Union
 
+
 class LambdaExpression:
     """
     Abstract base class for all lambda calculus expressions.
     Used as a parent for Var, Abs, and App.
     """
+
     pass
+
 
 class Var(LambdaExpression):
     """A variable expression (e.g., x)"""
+
     def __init__(self, name: str) -> None:
         self.name = name
 
@@ -19,8 +23,10 @@ class Var(LambdaExpression):
     def __eq__(self, other: object) -> bool:
         return isinstance(other, Var) and self.name == other.name
 
+
 class Abs(LambdaExpression):
     """A lambda abstraction (e.g., λx.M)"""
+
     def __init__(self, param: str, body: LambdaExpression) -> None:
         self.param = param
         self.body = body
@@ -29,10 +35,16 @@ class Abs(LambdaExpression):
         return f"(λ{self.param}.{self.body})"
 
     def __eq__(self, other: object) -> bool:
-        return isinstance(other, Abs) and self.param == other.param and self.body == other.body
+        return (
+            isinstance(other, Abs)
+            and self.param == other.param
+            and self.body == other.body
+        )
+
 
 class App(LambdaExpression):
     """An application of one expression to another (e.g., M N)"""
+
     def __init__(self, func: LambdaExpression, arg: LambdaExpression) -> None:
         self.func = func
         self.arg = arg
@@ -41,7 +53,10 @@ class App(LambdaExpression):
         return f"({self.func} {self.arg})"
 
     def __eq__(self, other: object) -> bool:
-        return isinstance(other, App) and self.func == other.func and self.arg == other.arg
+        return (
+            isinstance(other, App) and self.func == other.func and self.arg == other.arg
+        )
+
 
 def free_variables(expr: LambdaExpression) -> Set[str]:
     """Returns the set of free variables in the given lambda expression"""
@@ -55,7 +70,10 @@ def free_variables(expr: LambdaExpression) -> Set[str]:
         return free_variables(expr.func) | free_variables(expr.arg)
     return set()
 
-def substitute(term: LambdaExpression, var: str, repl: LambdaExpression) -> LambdaExpression:
+
+def substitute(
+    term: LambdaExpression, var: str, repl: LambdaExpression
+) -> LambdaExpression:
     """Performs capture-avoiding substitution of a variable in a term"""
     if isinstance(term, Var):
         return repl if term.name == var else term
@@ -67,9 +85,11 @@ def substitute(term: LambdaExpression, var: str, repl: LambdaExpression) -> Lamb
         return App(substitute(term.func, var, repl), substitute(term.arg, var, repl))
     return term
 
+
 def alpha_conversion(abs_term: Abs, new_param: str) -> Abs:
     """Renames the bound variable in an abstraction to a new variable name"""
     return Abs(new_param, substitute(abs_term.body, abs_term.param, Var(new_param)))
+
 
 def beta_reduction(term: LambdaExpression) -> Optional[LambdaExpression]:
     """Performs a single beta reduction (normal-order)"""
@@ -88,6 +108,7 @@ def beta_reduction(term: LambdaExpression) -> Optional[LambdaExpression]:
             return Abs(term.param, reduced)
     return None
 
+
 def normalise(term: LambdaExpression) -> LambdaExpression:
     """Reduces a term to its normal form using beta reduction"""
     next_term = beta_reduction(term)
@@ -96,9 +117,11 @@ def normalise(term: LambdaExpression) -> LambdaExpression:
         next_term = beta_reduction(term)
     return term
 
+
 def pretty_print(term: LambdaExpression) -> str:
     """Returns a string representation of the lambda expression"""
     return repr(term)
+
 
 def lexer(src: str) -> List[str]:
     """Converts a source string into a list of tokens for parsing"""
@@ -120,8 +143,10 @@ def lexer(src: str) -> List[str]:
             raise SyntaxError(f"Unexpected character: {c}")
     return tokens
 
+
 class Parser:
     """Parses a token list into a lambda expression AST"""
+
     def __init__(self, src: str) -> None:
         self.tokens = lexer(src)
         self.pos = 0
@@ -169,6 +194,7 @@ class Parser:
             term = App(term, arg)
         return term
 
+
 def main() -> None:
     """Reads a .lam file and evaluates each line as a separate expression."""
     if len(sys.argv) != 2:
@@ -192,5 +218,7 @@ def main() -> None:
         print(f"File not found: {sys.argv[1]}")
     except Exception as e:
         print(f"Unexpected error: {e}")
+
+
 if __name__ == "__main__":
     main()
